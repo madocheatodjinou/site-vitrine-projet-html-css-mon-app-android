@@ -1,0 +1,32 @@
+body {
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: darkblue;
+    text-align: center;
+}
+
+p {
+    color: #333;
+    font-size: 18px;
+}
+
+ul {
+    background-color: white;
+    padding: 20px;
+}
+
+li {
+    color: darkgreen;
+}
+
+a {
+    color: red;
+    text-decoration: none;
+}
+
+a:hover {
+    color: blue;
+}
