@@ -1,30 +1,145 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Madoché</title>
     <meta charset="UTF-8">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madoché Atodjinou - Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
-    <h1>ATODJINOU </h1>
-
 <body>
+    <!-- Header/Navigation -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">Madoché</div>
+            <nav class="nav">
+                <a href="#about" class="nav-link">À propos</a>
+                <a href="#projects" class="nav-link">Projets</a>
+                <a href="#skills" class="nav-link">Compétences</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+        </div>
+    </header>
 
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Développeur Web en Formation</h1>
+                <p class="hero-subtitle">Créer des expériences web modernes et intuitives</p>
+                <a href="#contact" class="btn btn-primary">Commençons</a>
+            </div>
+        </div>
+    </section>
 
-    <p>Ceci est une page web simple créée uniquement avec du HTML.</p>
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">À propos de moi</h2>
+            <p class="section-text">Je suis passionné par le développement web et j'apprends continuellement les dernières technologies. Mon objectif est de créer des interfaces web belles, fonctionnelles et accessibles.</p>
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3>🎯 Mission</h3>
+                    <p>Maîtriser le développement web moderne et créer des projets impactants.</p>
+                </div>
+                <div class="about-card">
+                    <h3>💡 Vision</h3>
+                    <p>Devenir un développeur full-stack compétent et reconnu dans l'industrie.</p>
+                </div>
+                <div class="about-card">
+                    <h3>🚀 Approche</h3>
+                    <p>Apprendre en pratiquant, créer des projets réels et partager mes connaissances.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <h2>À propos</h2>
-    <p>Je suis en train d'apprendre le développement web.</p>
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Projets</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">Application Android</div>
+                    <p>Une application mobile innovante avec une interface intuitive et de nombreuses fonctionnalités.</p>
+                    <div class="project-tags">
+                        <span class="tag">Android</span>
+                        <span class="tag">Mobile</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">Portfolio Personnel</div>
+                    <p>Ce portfolio moderne qui met en avant mes compétences en développement web.</p>
+                    <div class="project-tags">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">Projets à venir</div>
+                    <p>Des projets web modernes en cours de développement utilisant les technologies les plus récentes.</p>
+                    <div class="project-tags">
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">React</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <h2>Mes objectifs</h2>
-    <ul>
-        <li>Comprendre le HTML</li>
-        <li>Créer des pages simples</li>
-        <li>Évoluer vers le CSS et le JavaScript</li>
-    </ul>
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">Compétences</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Frontend</h3>
+                    <ul>
+                        <li>HTML5</li>
+                        <li>CSS3</li>
+                        <li>JavaScript</li>
+                        <li>Responsive Design</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Mobile</h3>
+                    <ul>
+                        <li>Android</li>
+                        <li>Design Mobile</li>
+                        <li>UX/UI</li>
+                        <li>Performance</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Outils</h3>
+                    <ul>
+                        <li>Git & GitHub</li>
+                        <li>VS Code</li>
+                        <li>Chrome DevTools</li>
+                        <li>Figma</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <h2>Contact</h2>
-    <p>Email : exemple@email.com</p>
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Restons en contact</h2>
+            <p class="section-text">Je suis toujours intéressé par de nouveaux projets et collaborations. N'hésitez pas à me contacter !</p>
+            <div class="contact-links">
+                <a href="mailto:exemple@email.com" class="btn btn-secondary">Envoyer un email</a>
+                <a href="https://github.com/madocheatodjinou" target="_blank" class="btn btn-secondary">GitHub</a>
+                <a href="#" class="btn btn-secondary">LinkedIn</a>
+            </div>
+        </div>
+    </section>
 
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Madoché Atodjinou. Tous les droits réservés.</p>
+        </div>
+    </footer>
 </body>
 </html>
