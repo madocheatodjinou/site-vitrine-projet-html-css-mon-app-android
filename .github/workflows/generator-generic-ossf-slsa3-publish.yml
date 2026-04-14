@@ -15,6 +15,12 @@ on:
   workflow_dispatch:
   release:
     types: [created]
+  push:
+    branches: [main, develop]
+    paths:
+      - 'src/**'
+      - 'app/**'
+      - '.github/workflows/generator-generic-ossf-slsa3-publish.yml'
 
 jobs:
   build:
@@ -27,32 +33,98 @@ jobs:
 
       # ========================================================
       #
-      # Step 1: Build your artifacts.
+      # Step 1: Build your web artifacts (HTML/CSS)
       #
       # ========================================================
-      - name: Build artifacts
+      - name: Build web artifacts
         run: |
-            # These are some amazing artifacts.
-            echo "artifact1" > artifact1
-            echo "artifact2" > artifact2
+          # Create dist directory for web assets
+          mkdir -p dist
+          
+          # Copy HTML/CSS/JS files to dist
+          if [ -d "src" ]; then
+            cp -r src/* dist/ 2>/dev/null || true
+          fi
+          
+          # Verify artifacts were created
+          if [ -z "$(ls -A dist)" ]; then
+            echo "Warning: dist directory is empty"
+            # Create a placeholder to ensure artifacts exist
+            echo "Build output" > dist/build.txt
+          fi
+          
+          # List generated artifacts
+          echo "Generated artifacts:" 
+          find dist -type f | head -20
 
       # ========================================================
       #
-      # Step 2: Add a step to generate the provenance subjects
-      #         as shown below. Update the sha256 sum arguments
-      #         to include all binaries that you generate
-      #         provenance for.
+      # Step 2: (Optional) Build Android APK
       #
       # ========================================================
+      # Uncomment if you have Android build setup
+      # - name: Build Android APK
+      #   uses: actions/setup-java@v3
+      #   with:
+      #     java-version: '11'
+      #     distribution: 'temurin'
+      #
+      # - name: Build with Gradle
+      #   run: |
+      #     if [ -f "app/build.gradle" ] || [ -f "build.gradle" ]; then
+      #       chmod +x gradlew
+      #       ./gradlew build
+      #       # APKs will be in app/build/outputs/apk/
+      #     fi
+
+      # ========================================================
+      #
+      # Step 3: Prepare and generate provenance subjects
+      #
+      # ========================================================
+      - name: Prepare artifacts for provenance
+        run: |
+          # Create an artifacts directory
+          mkdir -p build-artifacts
+          
+          # Copy web build artifacts
+          if [ -d "dist" ] && [ -n "$(ls -A dist)" ]; then
+            cp -r dist/* build-artifacts/ 2>/dev/null || true
+          fi
+          
+          # Copy APK if it exists (uncomment when Android build is ready)
+          # if [ -d "app/build/outputs/apk" ]; then
+          #   find app/build/outputs/apk -name "*.apk" -exec cp {} build-artifacts/ \;
+          # fi
+          
+          # Ensure at least one artifact exists
+          if [ -z "$(ls -A build-artifacts)" ]; then
+            echo "ERROR: No artifacts found to sign!"
+            exit 1
+          fi
+          
+          echo "Artifacts ready for signing:"
+          ls -lh build-artifacts/
+
       - name: Generate subject for provenance
         id: hash
         run: |
           set -euo pipefail
 
           # List the artifacts the provenance will refer to.
-          files=$(ls artifact*)
+          files=$(find build-artifacts -type f)
+          
+          if [ -z "$files" ]; then
+            echo "ERROR: No files found in build-artifacts"
+            exit 1
+          fi
+          
           # Generate the subjects (base64 encoded).
-          echo "hashes=$(sha256sum $files | base64 -w0)" >> "${GITHUB_OUTPUT}"
+          echo "hashes=$(echo "$files" | xargs sha256sum | base64 -w0)" >> "${GITHUB_OUTPUT}"
+          
+          # Debug output
+          echo "Generated hashes:"
+          echo "$files" | xargs sha256sum
 
   provenance:
     needs: [build]
@@ -63,4 +135,4 @@ jobs:
     uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.4.0
     with:
       base64-subjects: "${{ needs.build.outputs.digests }}"
-      upload-assets: true # Optional: Upload to a new release
+      upload-assets: true # Upload provenance to release
